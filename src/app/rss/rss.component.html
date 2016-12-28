@@ -1,0 +1,12 @@
+<tr *ngFor="let item of rss">
+    <td><input type="checkbox" [disabled]="item.deleted" ([ngModel])="item.checked"></td>
+    <td>
+        <div [class.deleted]="item.deleted">{{item.title}}</div>
+        <div [class.deleted]="item.deleted"><a href="{{item.url}}">{{item.url}} </a></div>
+    </td>
+    <td>
+        <i (click)="rssDelete(item)" *ngIf="!item.deleted" class="glyphicon glyphicon-trash"></i>
+        <i (click)="rssEdit(item)" *ngIf="!item.deleted" class="glyphicon glyphicon-pencil"></i>
+        <i (click)="rssUndelete(item)" *ngIf=" item.deleted " class="glyphicon glyphicon-modal-window "></i>
+    </td>
+</tr>

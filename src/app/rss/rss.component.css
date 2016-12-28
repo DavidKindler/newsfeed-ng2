@@ -1,0 +1,8 @@
+.deleted {
+    text-decoration: line-through;
+    opacity: .5;
+}
+
+i {
+    cursor: pointer;
+}
