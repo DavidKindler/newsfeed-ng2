@@ -8,10 +8,17 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 
 export class LoginFormComponent {
-  form = new FormGroup({
-    username: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required)
-  });
+  // form = new FormGroup({
+  //   email: new FormControl('', Validators.required),
+  //   password: new FormControl('', Validators.required)
+  // });
 
+  onLogin(e){
+    console.log ('on submite=>', e);
+  }
+
+  log(p){
+    console.log ('form param', p);
+  }
 }
 

@@ -1,12 +1,17 @@
-<form>
+<form (ngSubmit)="onLogin($event.target)">
     <h2>Login Form</h2>
     <div class="form-group">
-        <label for="username">Username</label>
-        <input id="username" type="text" class="form-control">
+        <label for="email">Email Address</label>
+        <input id="email" type="text" class="form-control" name="email" ngModel #email="ngModel" (change)="log(email)" required>
+        <div class="" *ngIf="email.touched && email.errors">
+            <div *ngIf="!email.valid" class="alert alert-danger">
+                Email is required
+            </div>
+        </div>
     </div>
     <div class="form-group">
         <label for="password">Password</label>
-        <input id="password" type="text" class="form-control">
+        <input id="password" type="text" class="form-control" name="password" ngModel #password="ngModel" type="password" (change)="log(password)" required>
     </div>
-    <button class="btn btn-primary" type="submit">Sign In</button>
+    <button class=" btn btn-primary " type="submit">Log In</button>
 </form>

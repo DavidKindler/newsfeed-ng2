@@ -8,16 +8,18 @@
             <div *ngIf="form.controls.email.errors.required" class="alert alert-danger ">Email is required.</div>
 
             <div *ngIf="form.controls.email.errors.shouldBeUnique" class="alert alert-danger ">Email already used.</div>
-            <div *ngIf="form.controls.email.errors.emailInvalid " class="alert alert-danger ">password is not valid.</div>
+            <div *ngIf="form.controls.email.errors.emailInvalid " class="alert alert-danger ">Email is not valid.</div>
+
         </div>
     </div>
     <div class="form-group ">
         <label for="password">Password</label>
-        <input id="password" type="text " class="form-control " formControlName="password">
+        <input id="password" type="text " class="form-control " formControlName="password" type="password">
         <div class="" *ngIf="form.controls.password.touched && form.controls.password.errors">
             <div *ngIf="form.controls.password.errors.required" class="alert alert-danger ">password is required.</div>
             <div *ngIf="form.controls.password.errors.cannotContainSpace" class="alert alert-danger ">Password cannot contain space.</div>
         </div>
     </div>
+    <!--<div *ngIf="form.controls.email.errors.invalidLogin " class="alert alert-danger ">INVALID LOGIN</div>-->
     <button class="btn btn-primary " type="submit ">Sign Up</button>
 </form>

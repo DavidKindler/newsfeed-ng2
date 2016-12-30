@@ -29,8 +29,14 @@ export class SignupFormComponent  {
   //   password: new FormControl('', Validators.required)
   // });
 
-  onSignup(){
-    console.log (this.form.value)
+  onSignup() {
+    //var result = authService.login(this.form.value);  // For signin
+    // this.form.get('email').setErrors({
+    //   invalidLogin: true
+    // });
+    console.log ('form.value',this.form.value);
+    console.log ('form.get(email)',this.form.get('email'));
+
   }
 
 }
