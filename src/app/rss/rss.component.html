@@ -1,12 +1,46 @@
-<tr *ngFor="let item of rss">
-    <td><input type="checkbox" [disabled]="item.deleted" ([ngModel])="item.checked"></td>
-    <td>
-        <div [class.deleted]="item.deleted">{{item.title}}</div>
-        <div [class.deleted]="item.deleted"><a href="{{item.url}}">{{item.url}} </a></div>
-    </td>
-    <td>
-        <i (click)="rssDelete(item)" *ngIf="!item.deleted" class="glyphicon glyphicon-trash"></i>
-        <i (click)="rssEdit(item)" *ngIf="!item.deleted" class="glyphicon glyphicon-pencil"></i>
-        <i (click)="rssUndelete(item)" *ngIf=" item.deleted " class="glyphicon glyphicon-modal-window "></i>
-    </td>
-</tr>
+<div class="row">
+  <div class="col-sm-9">
+    <h1>{{_region.name}} News Items</h1>
+  </div>
+  <div class="col-sm-3">
+    <!--<button class="btn btn-block btn-success"><i class="glyphicon glyphicon-plus"></i> Add </button>-->
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <table class="table table-striped table-hover table-condensed">
+      <thead>
+        <tr>
+          <td><i class="glyphicon glyphicon-hand-down"></i></td>
+          <td>
+            <button type="button" class="btn btn-xs btn-warning">Delete <i class="glyphicon glyphicon-trash"></i></button>
+            <button class="btn btn-xs btn-success pull-right"><i class="glyphicon glyphicon-plus"></i> Add </button>
+          </td>
+          <td>
+            <rss-search-form></rss-search-form>
+          </td>
+        </tr>
+        <tr class="bg-primary">
+          <td><input type="checkbox" (change)="checkAll($event)"></td>
+          <td>Title/Link</td>
+          <td>Action</td>
+        </tr>
+      </thead>
+      <!--<tbody rss-list (rssUpdate)="onRssUpdate($event)">-->
+      <tbody (rssUpdate)="onRssUpdate($event)">
+        <tr *ngFor="let item of rssItems">
+          <td><input type="checkbox" [disabled]="item.deleted" ([ngModel])="item.checked"></td>
+          <td>
+            <div [class.deleted]="item.deleted">{{item.title}}</div>
+            <div [class.deleted]="item.deleted"><a href="{{item.url}}">{{item.url}} </a></div>
+          </td>
+          <td>
+            <i (click)="rssDelete(item)" *ngIf="!item.deleted" class="glyphicon glyphicon-trash"></i>
+            <i (click)="rssEdit(item)" *ngIf="!item.deleted" class="glyphicon glyphicon-pencil"></i>
+            <i (click)="rssUndelete(item)" *ngIf=" item.deleted " class="glyphicon glyphicon-modal-window "></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

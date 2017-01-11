@@ -10,6 +10,9 @@ import { RssComponent } from './rss/rss.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { SearchFormComponent } from './search-form/search-form.component';
 import { SignupFormComponent } from './login-form/signup-form.component';
+import { NotFoundComponent } from './not-found.component';
+
+import { routing } from './app.routing';
 
 @NgModule({
   declarations: [
@@ -19,13 +22,15 @@ import { SignupFormComponent } from './login-form/signup-form.component';
     RssComponent,
     LoginFormComponent,
     SearchFormComponent,
-    SignupFormComponent
+    SignupFormComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    routing
   ],
   providers: [],
   bootstrap: [AppComponent]

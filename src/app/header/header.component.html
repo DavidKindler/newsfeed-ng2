@@ -14,10 +14,11 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#">English <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Chinese</a></li>
-                <li><a href="#">Japanese</a></li>
-                <li><a href="#">Korean</a></li>
+                <li><a [routerLink] = "['','']">English <span class="sr-only">(current)</span></a></li>
+                <li><a [routerLink] = "['','zh']">China</a></li>
+                <li><a [routerLink] = "['','jp']">Japan</a></li>
+                <li><a [routerLink] = "['','kr']">Korea</a></li>
+                <!--<li><button (click)="onClick()">Click Me</button></li>-->
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
