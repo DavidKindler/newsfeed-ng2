@@ -12,27 +12,31 @@
       <thead>
         <tr>
           <td><i class="glyphicon glyphicon-hand-down"></i></td>
-          <td>
+          <td colspan="3">
             <button type="button" class="btn btn-xs btn-warning">Delete <i class="glyphicon glyphicon-trash"></i></button>
-            <button class="btn btn-xs btn-success pull-right"><i class="glyphicon glyphicon-plus"></i> Add </button>
-          </td>
-          <td>
-            <rss-search-form></rss-search-form>
+            <div class="pull-right">
+              <button routerLink="/news/{{_region.code}}/new" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-plus"></i> Add </button>
+              <rss-search-form ></rss-search-form>
+            </div>
           </td>
         </tr>
         <tr class="bg-primary">
           <td><input type="checkbox" (change)="checkAll($event)"></td>
           <td>Title/Link</td>
+          <td>Date</td>
           <td>Action</td>
         </tr>
       </thead>
       <!--<tbody rss-list (rssUpdate)="onRssUpdate($event)">-->
-      <tbody (rssUpdate)="onRssUpdate($event)">
-        <tr *ngFor="let item of rssItems">
-          <td><input type="checkbox" [disabled]="item.deleted" ([ngModel])="item.checked"></td>
-          <td>
-            <div [class.deleted]="item.deleted">{{item.title}}</div>
+      <tbody >
+        <tr *ngFor="let item of rssItems" (rssUpdate)="onRssUpdate($event)">
+          <td width="3%"><input type="checkbox" [disabled]="item.deleted" ([ngModel])="item.checked"></td>
+          <td width="80%">
+            <div [class.deleted]="item.deleted" [innerHTML]="item.title"></div>
             <div [class.deleted]="item.deleted"><a href="{{item.url}}">{{item.url}} </a></div>
+          </td>
+          <td>
+            {{item.newsdate | date:longDate}}
           </td>
           <td>
             <i (click)="rssDelete(item)" *ngIf="!item.deleted" class="glyphicon glyphicon-trash"></i>

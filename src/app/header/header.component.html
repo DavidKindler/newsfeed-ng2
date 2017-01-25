@@ -8,18 +8,20 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-            <a class="navbar-brand" href="#">News Feeds</a>
+            <a class="navbar-brand" routerLink = "news/en">News Feeds</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a [routerLink] = "['','']">English <span class="sr-only">(current)</span></a></li>
-                <li><a [routerLink] = "['','zh']">China</a></li>
-                <li><a [routerLink] = "['','jp']">Japan</a></li>
-                <li><a [routerLink] = "['','kr']">Korea</a></li>
-                <!--<li><button (click)="onClick()">Click Me</button></li>-->
-
+                <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <a routerLink = "news/en"> English </a>
+                </li>
+                <li routerLinkActive="active"><a routerLink = "news/ch" >China</a></li>
+                <li routerLinkActive="active"><a routerLink = "news/ja" >Japan</a></li>
+                <li routerLinkActive="active"><a routerLink = "news/ko">Korea</a></li>
+                <li routerLinkActive="active"><a routerLink = "users">Users</a></li>
+                <li routerLinkActive="active"><a routerLink = "posts" >Posts</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown" rssDropdown>

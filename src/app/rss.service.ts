@@ -1,145 +1,46 @@
 import { Input, Injectable } from '@angular/core';
+import { Http } 	  from '@angular/http';
+import 'rxjs/add/operator/map';
+
 
 @Injectable()
 export class RSSService {
+	private _url = "http://localhost:3456/items/";
 
-  getRss(region){
-    console.log ('rss service - getRSS for',region);
-    switch (region.code) {
-      case 'jp':
-             console.log ('Japan RSS returned');
-             return [
-              {
-                title: "JAPANESE - TITLE1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempora!",
-                url: "//sample.com/rss2.html",
-                deleted: false,
-                id: 312
-              },
-              {
-                title: "JAPANESE - TITLE2  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempora!",
-                url: "//sample.com/rss3.html",
-                deleted: true,
-                id:93
-              },
-              {
-                title: "JAPANESE - TITLE3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempora!",
-                url: "//sample.com/rss4.html",
-                deleted: false,
-                id:22
-              }
-            ]
-        // break;
-      case 'kr':
-            console.log ('Korean RSS returned');
-            return [
-            {
-              title: "KOREAN - RSS TITLE Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempora!",
-              url: "//sample.com/rss1.html",
-              deleted: false,
-              id : 1
-            },
-            {
-              title: "KOREAN - TITLE2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempora!",
-              url: "//sample.com/rss2.html",
-              deleted: false,
-              id: 312
-            },
-            {
-              title: "KOREAN - TITLE3  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempora!",
-              url: "//sample.com/rss3.html",
-              deleted: true,
-              id:93
-            },
-            {
-              title: "KOREAN - TITLE4  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempora!",
-              url: "//sample.com/rss4.html",
-              deleted: false,
-              id:22
-            }
-          ]
-        // break;
-      case 'zh':
-        console.log ('China RSS returned');
-        return [
-              {
-                title: "CHINESE - RSS TITLE Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempora!",
-                url: "//sample.com/rss1.html",
-                deleted: false,
-                id : 1
-              },
-              {
-                title: "CHINESE - TITLE2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempora!",
-                url: "//sample.com/rss2.html",
-                deleted: false,
-                id: 312
-              },
-              {
-                title: "CHINESE - TITLE3  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempora!",
-                url: "//sample.com/rss3.html",
-                deleted: true,
-                id:93
-              },
-              {
-                title: "CHINESE - TITLE4  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempora!",
-                url: "//sample.com/rss4.html",
-                deleted: false,
-                id:22
-              },
-              {
-                title: "CHINESE - TITLE5  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempora!",
-                url: "//sample.com/rss4.html",
-                deleted: false,
-                id:225
-              }
-            ]
-      default:
-        console.log ('Default english rss returned');
-        return [
-              {
-                title: "WTFRSS TITLE Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempora!",
-                url: "//sample.com/rss1.html",
-                deleted: false,
-                id : 1
-              },
-              {
-                title: "TITLE2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempora!",
-                url: "//sample.com/rss2.html",
-                deleted: false,
-                id: 312
-              },
-              {
-                title: "TITLE3  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempora!",
-                url: "//sample.com/rss3.html",
-                deleted: true,
-                id:93
-              },
-              {
-                title: "TITLE4  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempora!",
-                url: "//sample.com/rss4.html",
-                deleted: false,
-                id:22
-              },
-              {
-                title: "TITLE5  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempora!",
-                url: "//sample.com/rss4.html",
-                deleted: false,
-                id:242
-              },
-              {
-                title: "TITLE5  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempora!",
-                url: "//sample.com/rss4.html",
-                deleted: false,
-                id:22
-              },
-              {
-                title: "TITLE6  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempora!",
-                url: "//sample.com/rss4.html",
-                deleted: false,
-                id:223
-              }
-            ]
-    }
- 
-  }
+	constructor(private _http: Http) {
+	}
 
+	getRss(region?) {
+        var url = this._url;
+        // console.log ('getRSS region',region)
+        if (region && region.code)
+            url +=  region.code;
+        
+		return this._http.get(url)
+			.map(res => {
+        // console.log ('Response',res.json());
+        return res.json();
+      });
+			// .map(res => res);
+	}
+    
+	// getComments(postId){
+	// 	return this._http.get(this._url + "/" + postId + "/comments")
+	// 		.map(res => res.json());
+	// }
+
+	addItem(item){
+	// this._http.post(this._url, JSON.stringify(user))
+	// console.log ('addItem json string', item);
+	return this._http.post(this._url+"add", item)
+		.map( (res) => {
+			if (res.status < 200 || res.status >300) {
+				console.log ('request failed');
+				throw new Error('This request has failed '+ res.status);
+			} else {
+				// console.log ('item added. here is response',res.json());
+				return res.json();
+			}
+		});
+	}
 }

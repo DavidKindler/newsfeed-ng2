@@ -9,8 +9,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class AppComponent {
   constructor() {}
 
-  onRssUpdate(item){
-    console.log ('onRssUpdate',item);
+  onRssUpdate2(item){
+    console.log ('appComponent onRssUpdate2',item);
     // item.deleted = !item.deleted;
   }
   
