@@ -13,6 +13,7 @@ import { Observable } from 'rxjs/Rx';
 export class RssComponent  implements OnInit, OnDestroy {
   private _region: Object;
   private _rssItems: Object;
+   error: string;
 
   subscription;
 
@@ -23,7 +24,7 @@ export class RssComponent  implements OnInit, OnDestroy {
 
   constructor( 
     private region: RegionService, 
-    private rssService: RSSService, 
+    private _rssService: RSSService, 
     private route: ActivatedRoute
     // private _router: Router
     ) { 
@@ -31,24 +32,19 @@ export class RssComponent  implements OnInit, OnDestroy {
     }
 
   ngOnInit() {
-    // this.loadRegion(this.route.params);
-    // this.loadRss(this._region);
+   
     this.subscription = this.route.params.subscribe( (params) => {
-      // console.log ("PARAMS" , params)
-      // this._region = {"name": "US", "code": "en"};
       this._region = this.loadRegion(params);
-      this._rssItems = this.loadRss(this._region).subscribe((items) => {
-        // console.log ('ITEMS',items)
+      this._rssItems = this.loadRss(this._region).subscribe( (items) => {
+        this.error = null;
         this.rssItems = items
         this.rssItems.forEach((item)=> items.checked = false);
+      }, (err) => {
+        console.log ('got an server error', err);
+        this.error = err; 
+        this.rssItems = null;
       });
-      // this.rssItems = this.loadRss(this._region)
     })
-    // this.subscription = this._route.params.subscribe( (params) => {
-    //   this._region = this.region.getRegion(params["region"]);
-    //   this.rssItems =   this._rssService.getRss(this._region);
-    //   this.rssItems.forEach((item)=> item.checked = false);
-    // })
     
   }
   private loadRegion(params){
@@ -57,8 +53,8 @@ export class RssComponent  implements OnInit, OnDestroy {
   }
 
   private loadRss(region){
-    // console.log ('loadRSS', this.rssService.getRss(region))
-    return this.rssService.getRss(region);
+    // console.log ('loadRSS', this._rssService.getRss(region))
+    return this._rssService.getRss(region);
   }
 
   ngOnDestroy(){
@@ -67,16 +63,29 @@ export class RssComponent  implements OnInit, OnDestroy {
   }
   
   rssDelete(item) {
+    if ( !confirm('Please confirm change') ) {
+      return;
+    }
     item.deleted= !item.deleted;
+    item.region = this._region["code"];
+    // console.log ('item from rssDElete',item)
+    this._rssService.deleteItem(item).subscribe( (data) => {
+        this.error=null;
+      }, (err) => {
+        console.log ('got an server error', err);
+        this.error = err; 
+    });
+
     this.rssUpdate.emit(item)
-    console.log ('delete item ' + item.id);
+    // deleteItem(item);
+    console.log ('delete item ' + item.deleted);
   }
 
-  rssUndelete(item) {
-    item.deleted = !item.deleted;
-    this.rssUpdate.emit(item)
-   console.log ('undelete item ' + item.id);
-  }
+  // rssUndelete(item) {
+  //   item.deleted = !item.deleted;
+  //   this.rssUpdate.emit(item)
+  //  console.log ('undelete item ' + item.id);
+  // }
 
   rssEdit(item) {
     item.title = "CHANGED " + item.title;

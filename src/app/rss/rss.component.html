@@ -1,4 +1,10 @@
 <div class="row">
+   <div *ngIf="error" class="col-sm-12">
+        <div class="alert alert-danger">
+            <p><strong>Server error!</strong></p>
+            <p>{{error}}</p>
+        </div>
+    </div>
   <div class="col-sm-9">
     <h1>{{_region.name}} News Items</h1>
   </div>
@@ -41,7 +47,7 @@
           <td>
             <i (click)="rssDelete(item)" *ngIf="!item.deleted" class="glyphicon glyphicon-trash"></i>
             <i (click)="rssEdit(item)" *ngIf="!item.deleted" class="glyphicon glyphicon-pencil"></i>
-            <i (click)="rssUndelete(item)" *ngIf=" item.deleted " class="glyphicon glyphicon-modal-window "></i>
+            <i (click)="rssDelete(item)" *ngIf=" item.deleted " class="glyphicon glyphicon-modal-window "></i>
           </td>
         </tr>
       </tbody>

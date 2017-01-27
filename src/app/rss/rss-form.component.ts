@@ -46,7 +46,7 @@ export class RssFormComponent implements OnInit {
 
   save() {
     var result;
-
+    
     this.rssItem.newsdate = this.form.value.date['formatted'] + ' 01:00:00';
     this.rssItem.region = this._region["code"];
     this.rssItem.category = "Press Release";
@@ -64,6 +64,7 @@ export class RssFormComponent implements OnInit {
         console.log ('got an server error', err);
         this.error = err; 
     });
+
   }
 
 }
