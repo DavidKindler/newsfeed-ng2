@@ -1,6 +1,4 @@
 
-/*  /// <reference path="../../../typings/globals/underscore/index.d.ts" /> */
-
 import { Component, OnInit } from '@angular/core';
 
 import { PostService }       from './post.service';
@@ -9,7 +7,8 @@ import { UsersService }       from '../users/users.service';
 import * as _ from 'underscore';
 
 @Component({
-    templateUrl: 'app/posts/posts.component.html',
+    selector: 'posts',
+    templateUrl: './posts.component.html',
     styles: [`
         .posts li { cursor: default; }
         .posts-table td:hover, .posts li:hover { background: #ecf0f1; } 

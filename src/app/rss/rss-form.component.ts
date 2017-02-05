@@ -6,7 +6,7 @@ import {  BasicValidators } from '../shared/basicValidators';
 import {  RSSService } from '../rss.service';
 import {  RegionService } from '../region.service';
 import {  RSSItem } from './rss';
-// import { DatepickerModule } from 'ng2-bootstrap/datepicker';
+import { DatepickerModule } from 'ng2-bootstrap/datepicker';
 
 @Component({
   selector: 'rss-rss-form',

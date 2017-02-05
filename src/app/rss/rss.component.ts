@@ -3,6 +3,9 @@ import { RSSService} from '../rss.service';
 import { RegionService } from '../region.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
+// import { SharedModule }        from '../shared/shared.module';
+
+import * as _ from 'underscore';
 
 @Component({
   selector: '.rss-list',
@@ -13,12 +16,16 @@ import { Observable } from 'rxjs/Rx';
 export class RssComponent  implements OnInit, OnDestroy {
   private _region: Object;
   private _rssItems: Object;
-   error: string;
+  error: string;
+  pageSize = 10;
 
   subscription;
 
   // @Input() rssItems: any[];
-  private rssItems : any[];
+  // rssItems : any[];
+  // rssItemsPaged: any[];
+  rssItems = [];
+  rssItemsPaged = [];
   @Output() rssUpdate = new EventEmitter();
   @Output() checkAllEvent = new EventEmitter();
 
@@ -37,12 +44,14 @@ export class RssComponent  implements OnInit, OnDestroy {
       this._region = this.loadRegion(params);
       this._rssItems = this.loadRss(this._region).subscribe( (items) => {
         this.error = null;
-        this.rssItems = items
+        this.rssItems = items;
         this.rssItems.forEach((item)=> items.checked = false);
+        this.rssItemsPaged = _.take(this.rssItems, this.pageSize);
       }, (err) => {
         console.log ('got an server error', err);
         this.error = err; 
         this.rssItems = null;
+        this.rssItemsPaged = null;
       });
     })
     
@@ -59,7 +68,7 @@ export class RssComponent  implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     // console.log ('Destroy', this._route);
-    // this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
   
   rssDelete(item) {
@@ -107,5 +116,9 @@ export class RssComponent  implements OnInit, OnDestroy {
     console.log ('RssComponent onRssUpdate',item);
     // item.deleted = !item.deleted;
   }
-
+  
+  onPageChanged(page) {
+        let startIndex = (page - 1) * this.pageSize;
+        this.rssItemsPaged = _.take(_.rest(this.rssItems, startIndex), this.pageSize);
+	}
 }
