@@ -9,7 +9,7 @@ import { UsersService }       from '../users/users.service';
 import * as _ from 'underscore';
 
 @Component({
-    templateUrl: 'app/posts/posts.component.html',
+    templateUrl: './posts.component.html',
     styles: [`
         .posts li { cursor: default; }
         .posts-table td:hover, .posts li:hover { background: #ecf0f1; } 
