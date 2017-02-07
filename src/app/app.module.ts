@@ -23,9 +23,10 @@ import { rssRouting } from './rss/rss.routing';
 import { PostsComponent } from './posts/posts.component';
 import { RssFormComponent } from './rss/rss-form.component';
 
-import { DatePickerModule } from 'ng2-datepicker';
 import { AuthGuard } from './auth-guard.service';
 import { AuthService } from './auth.service';
+import  { SanitizeHtml } from './shared/sanitize-html.pipe';
+
 
 @NgModule({
   declarations: [
@@ -37,13 +38,13 @@ import { AuthService } from './auth.service';
     SearchFormComponent,
     SignupFormComponent,
     NotFoundComponent,
-    RssFormComponent
+    RssFormComponent,
+    SanitizeHtml
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    DatePickerModule,
     CustomFormsModule,
     UsersModule,
     PostsModule,

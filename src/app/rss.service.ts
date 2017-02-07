@@ -28,6 +28,24 @@ export class RSSService {
 				}
 			});
 	}
+	
+	getRssItem(item) {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers });   
+		let data = {};
+		data["region"] = item["region"];
+		data["url"] = decodeURIComponent(decodeURIComponent(item["url"]));
+		return this._http.post(this._url+"edit",data,options)
+			.map( (res) => {
+				if (res.status < 200 || res.status >300) {
+					console.log ('request failed');
+					throw new Error('This request has failed '+ res.status);
+				} else {
+					// console.log ('getRssItem response',res.json())
+					return res.json();
+				}
+			});
+	}
 
 
 	addItem(item){

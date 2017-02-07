@@ -1,14 +1,18 @@
 <h1>{{header}}</h1>
 <div class="row">
-    <div class="col-md-6 well">
+    <div class="col-md-10 well">
         <form [formGroup]="form" (ngSubmit)="save()">
             <fieldset>
-                <legend>
+                <!--<legend>
                     News Item
-                </legend>
+                </legend>-->
                 <div class="form-group">
                     <label>Title</label>
-                    <input [(ngModel)]="rssItem.title" name="title" #title formControlName="title" type="text" class="form-control">
+                    <!--<div [innerHTML]="rssItem.title"></div>
+                    <div>{{rssItem.title | sanitizeHtml }}</div>-->
+                    <!--<input [(ngModel)]="rssItem.title" name="title" #title formControlName="title" type="text" class="form-control" [innerHTML]="rssItem.title">-->
+                   
+                    <input type="text" formControlName="title" [(ngModel)]="rssItem.title" name="title" #title class="form-control" >
                      <div *ngIf="form.controls.title.touched && form.controls.title.errors">
                       <div *ngIf="form.controls.title.errors.required" class="alert alert-danger">
                           Title is required.
@@ -23,13 +27,14 @@
                         Please type a valid url.
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Date</label>
-                     <!--<ng2-datepicker #date formControlName="date"></ng2-datepicker>-->
-                     <ng2-datepicker [(ngModel)]="rssItem.date" #date formControlName="date"></ng2-datepicker>
-                    <div *ngIf="form.controls.date.touched && form.controls.date.errors">
-                        <div *ngIf="form.controls.date.errors.required" class="alert alert-danger">
-                        Please enter a date.
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label>Date</label>
+                        <input [(ngModel)]="rssItem.newsdate" #newsdate formControlName="newsdate" class="form-control"  type="date" date>
+                        <div *ngIf="form.controls.newsdate.touched && form.controls.newsdate.errors">
+                            <div *ngIf="form.controls.newsdate.errors.required" class="alert alert-danger">
+                            Please enter a date.
+                            </div>
                         </div>
                     </div>
                 </div>

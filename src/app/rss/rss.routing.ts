@@ -19,5 +19,11 @@ export const rssRouting = RouterModule.forChild([
 		component: RssComponent,
 		canActivate: []
 		// canDeactivate: [ PreventUnsavedChangesGuard ]  
-	}
+	},
+	{ 
+		path: 'news/edit/:region/:url', 
+		component: RssFormComponent,
+		canActivate: [AuthGuard],
+		canDeactivate: [ PreventUnsavedChangesGuard ]  
+	},
 ]);

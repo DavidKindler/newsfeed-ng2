@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService} from '../auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'rss-login-form',
@@ -9,14 +9,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./login-form.component.css']
 })
 
-export class LoginFormComponent {
+export class LoginFormComponent implements OnInit{
   // form = new FormGroup({
   //   email: new FormControl('', Validators.required),
   //   password: new FormControl('', Validators.required)
   // });
+  returnUrl: string;
   constructor(
     private _authService: AuthService, 
-    private _router: Router){
+    private _router: Router,
+    private _route: ActivatedRoute ) {  }
+
+  ngOnInit(){
+     this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
+     console.log ('RETURNURL', this.returnUrl)
   }
 
   onLogin(e){
@@ -24,7 +30,7 @@ export class LoginFormComponent {
     let username = 'test';
     let password = 'test';
     this._authService.login(username,password);
-    this._router.navigate(['']);
+    this._router.navigate([this.returnUrl]);
   }
 
   log(p){
