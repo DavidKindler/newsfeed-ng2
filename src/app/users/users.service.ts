@@ -17,7 +17,7 @@ export class UsersService {
 	getUsers(){
 		return this._http.get(this._url)
 			.map(res => {
-				console.log ('getUsers',res.json());
+				// console.log ('getUsers',res.json());
 				return res.json();
 		});
 	}
@@ -25,7 +25,7 @@ export class UsersService {
     getUser(userId){
 		return this._http.get(this.getUserUrl(userId))
 			.map(res => {
-				console.log ('getUser',res.json());
+				// console.log ('getUser',res.json());
 				return res.json()
 			});
 	}

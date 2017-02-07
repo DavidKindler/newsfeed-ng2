@@ -4,15 +4,16 @@ import { Directive, HostBinding, HostListener } from '@angular/core';
   selector: '[rssDropdown]'
 })
 export class DropdownDirective {
+  private _isOpen = false;
+
   @HostBinding('class.open') get opened(){
-    return this.isOpen;
+    return this._isOpen;
   }
   @HostListener('click') open() {
-    this.isOpen = true;
+    this._isOpen = true;
   }
   @HostListener('mouseleave') close() {
-    this.isOpen = false;
+    this._isOpen = false;
   }
-  private isOpen = false;
 
 }

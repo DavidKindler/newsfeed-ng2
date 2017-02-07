@@ -18,11 +18,15 @@ import { NotFoundComponent } from './not-found.component';
 
 import { routing } from './app.routing';
 import { usersRouting }      from './users/users.routing';
+import { postsRouting } from './posts/posts.routing';
 import { rssRouting } from './rss/rss.routing';
 import { PostsComponent } from './posts/posts.component';
 import { RssFormComponent } from './rss/rss-form.component';
 
-import { DatePickerModule } from 'ng2-datepicker';
+import { AuthGuard } from './auth-guard.service';
+import { AuthService } from './auth.service';
+import  { SanitizeHtml } from './shared/sanitize-html.pipe';
+
 
 @NgModule({
   declarations: [
@@ -34,22 +38,24 @@ import { DatePickerModule } from 'ng2-datepicker';
     SearchFormComponent,
     SignupFormComponent,
     NotFoundComponent,
-    RssFormComponent
+    RssFormComponent,
+    SanitizeHtml
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    DatePickerModule,
     CustomFormsModule,
     UsersModule,
     PostsModule,
     ReactiveFormsModule,
     rssRouting,
     usersRouting,
-    routing    
+    postsRouting,
+    routing,
+    SharedModule   
   ],
-  providers: [],
+  providers: [AuthGuard, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

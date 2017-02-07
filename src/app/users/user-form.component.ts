@@ -1,5 +1,5 @@
 import {  Component,  OnInit } from '@angular/core';
-import { FormControl, FormBuilder,  FormGroup,  Validators } from '@angular/forms';
+import {  FormControl, FormBuilder,  FormGroup,  Validators } from '@angular/forms';
 import {  Router,  ActivatedRoute} from '@angular/router';
 
 import {  BasicValidators } from '../shared/basicValidators';
@@ -47,7 +47,10 @@ export class UserFormComponent implements OnInit {
 
       this._userService.getUser(id)
         .subscribe(
-          user => this.user = user,
+          user => { 
+            this.user = user
+            console.log ('user is',user)
+          },
           response => {
             if (response.status == 404) {
               this._router.navigate(['NotFound']);

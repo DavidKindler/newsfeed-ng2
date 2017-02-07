@@ -1,3 +1,10 @@
+<!--<div class="row"> 
+    <div class="col-md-6">
+        <div *ngIf="currentItem" class="panel panel-default" [innerHTML]="currentItem.title">
+        </div>
+    </div>
+</div>-->
+
 <div class="row">
    <div *ngIf="error" class="col-sm-12">
         <div class="alert alert-danger">
@@ -5,6 +12,7 @@
             <p>{{error}}</p>
         </div>
     </div>
+     
   <div class="col-sm-9">
     <h1>{{_region.name}} News Items</h1>
   </div>
@@ -14,6 +22,7 @@
 </div>
 <div class="row">
   <div class="col-sm-12">
+   
     <table class="table table-striped table-hover table-condensed">
       <thead>
         <tr>
@@ -35,11 +44,11 @@
       </thead>
       <!--<tbody rss-list (rssUpdate)="onRssUpdate($event)">-->
       <tbody >
-        <tr *ngFor="let item of rssItems" (rssUpdate)="onRssUpdate($event)">
+        <tr *ngFor="let item of rssItemsPaged" (rssUpdate)="onRssUpdate($event)">
           <td width="3%"><input type="checkbox" [disabled]="item.deleted" ([ngModel])="item.checked"></td>
           <td width="80%">
             <div [class.deleted]="item.deleted" [innerHTML]="item.title"></div>
-            <div [class.deleted]="item.deleted"><a href="{{item.url}}">{{item.url}} </a></div>
+            <div [class.deleted]="item.deleted"><a href="{{item.url}}" [innerHTML]="item.url"></a></div>
           </td>
           <td>
             {{item.newsdate | date:longDate}}
@@ -52,5 +61,6 @@
         </tr>
       </tbody>
     </table>
+      <pagination [items]="rssItems" (page-changed)="onPageChanged($event)"></pagination>
   </div>
 </div>

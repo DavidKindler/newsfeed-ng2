@@ -6,7 +6,8 @@ import {  BasicValidators } from '../shared/basicValidators';
 import {  RSSService } from '../rss.service';
 import {  RegionService } from '../region.service';
 import {  RSSItem } from './rss';
-// import { DatepickerModule } from 'ng2-bootstrap/datepicker';
+import {  DomSanitizer } from '@angular/platform-browser';
+import  { SanitizeHtml } from '../shared/sanitize-html.pipe';
 
 @Component({
   selector: 'rss-rss-form',
@@ -27,42 +28,87 @@ export class RssFormComponent implements OnInit {
     private region: RegionService, 
     private _router: Router,
     private _route: ActivatedRoute,
-    private _rssService: RSSService
+    private _rssService: RSSService,
+    private _sanitizer: DomSanitizer
   ) {
     this.form = fb.group({
       title:['',Validators.required],
       url:['',Validators.required],
-      date: ['',Validators.required]
+      newsdate: ['',Validators.required]
     })
    }
 
-  ngOnInit() {
-    var region = this._route.params.subscribe(params => {
-      this._region = this.region.getRegion(params);
-      this.header = this._region["name"] + ": Add News Item";
-    });
+   private decodeEntities(encodedString: string) {
+      var textArea = document.createElement('textarea');
+      textArea.innerHTML = encodedString;
+      return textArea.value;
+    }
 
+// console.log(decodeEntities('1 &amp; 2'));
+  ngOnInit() {
+    let self = this;
+    var item = self._route.params.subscribe(params => {
+     
+      // var url = decodeURIComponent(decodeURIComponent(params["url"]));
+      // console.log ('params',params, url)
+      // params["url"] = url;
+      self._region = self.region.getRegion(params);
+      if (params["url"]) {
+        self.header =  "Edit Item";
+        
+        // self._rssService.getRss(region);
+        //  self._rssService.getItem(url)
+        // .subscribe(
+        //   user => self.user = user,
+        //   response => {
+        //     if (response.status == 404) {
+        //       self._router.navigate(['NotFound']);
+        //     }
+        //   });
+            
+            self._rssService.getRssItem(params).subscribe( (item)=> {
+              self.error = null;
+              self.rssItem = item;
+              self.rssItem.title = self.decodeEntities(item.title);
+              self.rssItem.url = self.decodeEntities(item.url);
+              self.rssItem.newsdate = item.newsdate.slice(0,10);
+
+              // console.log (item.newsdate,this.rssItem)
+            }, (err) => {
+                console.log ('got a server error',err);
+                self.error=err;
+            })
+      } else {
+        self.header = self._region["name"] + ": Add News Item";
+        return;
+      }
+      // var region = self._route.params.subscribe(params => {
+      //   self._region = self.region.getRegion(params);
+      //   self.header = self._region["name"] + ": Add News Item";
+      // });
+
+    });
   }
 
   save() {
     var result;
-    
-    this.rssItem.newsdate = this.form.value.date['formatted'] + ' 01:00:00';
-    this.rssItem.region = this._region["code"];
-    this.rssItem.category = "Press Release";
-    // console.log ('save rssItem',this.rssItem)
+    let self = this;
+    self.rssItem.newsdate = self.form.value.newsdate + ' 01:00:00';
+    self.rssItem.region = self._region["code"];
+    // self.rssItem.category = "Press Release";
+    // console.log ('save rssItem',self.rssItem)
 
 
-    result = this._rssService.addItem(this.rssItem)
+    result = self._rssService.addItem(self.rssItem)
 
     result.subscribe( (data) => {
-        this.form.reset();
+        self.form.reset();
         // Ideally, here we'd want:
-        // this.form.markAsPristine();
-        this._router.navigate(['news',  this._region["code"] ]);
+        // self.form.markAsPristine();
+        self._router.navigate(['news',  self._region["code"] ]);
       }, (err) => {
         console.log ('got an server error', err);
-        this.error = err; 
+        self.error = err; 
     });
 
   }
