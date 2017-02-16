@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Rx';
 // import { SharedModule }        from '../shared/shared.module';
 
 import * as _ from 'underscore';
+import * as he from 'he';
 
 @Component({
   selector: '.rss-list',

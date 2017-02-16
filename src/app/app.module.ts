@@ -25,8 +25,8 @@ import { RssFormComponent } from './rss/rss-form.component';
 
 import { AuthGuard } from './auth-guard.service';
 import { AuthService } from './auth.service';
-import  { SanitizeHtml } from './shared/sanitize-html.pipe';
-
+// import  { SanitizeHtml } from './shared/sanitize-html.pipe';
+// import { he } 
 
 @NgModule({
   declarations: [
@@ -39,7 +39,7 @@ import  { SanitizeHtml } from './shared/sanitize-html.pipe';
     SignupFormComponent,
     NotFoundComponent,
     RssFormComponent,
-    SanitizeHtml
+    // SanitizeHtml
   ],
   imports: [
     BrowserModule,

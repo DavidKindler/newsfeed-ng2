@@ -27,11 +27,11 @@
                 <li class="dropdown" rssDropdown>
                     <a class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Login</a></li>
-                        <li><a href="#">Another action</a></li>
+                        <li *ngIf="!isLoggedIn"><a routerLink="login">Login</a></li>
+                        <li ><a href="#">Another action</a></li>
                         <li><a href="#">Something else here</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">Logout</a></li>
+                        <li *ngIf="isLoggedIn"><a (click)="logout()">Logout</a></li>
                     </ul>
                 </li>
             </ul>

@@ -8,10 +8,6 @@
                 </legend>-->
                 <div class="form-group">
                     <label>Title</label>
-                    <!--<div [innerHTML]="rssItem.title"></div>
-                    <div>{{rssItem.title | sanitizeHtml }}</div>-->
-                    <!--<input [(ngModel)]="rssItem.title" name="title" #title formControlName="title" type="text" class="form-control" [innerHTML]="rssItem.title">-->
-                   
                     <input type="text" formControlName="title" [(ngModel)]="rssItem.title" name="title" #title class="form-control" >
                      <div *ngIf="form.controls.title.touched && form.controls.title.errors">
                       <div *ngIf="form.controls.title.errors.required" class="alert alert-danger">
